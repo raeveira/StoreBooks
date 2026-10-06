@@ -1,0 +1,32 @@
+# Build output
+[Bb]in/
+[Oo]bj/
+[Aa]rtifacts/
+[Pp]ublish/
+
+# IDE and user-specific files
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Test output
+[Tt]est[Rr]esults/
+coverage/
+
+# Local environment and settings (may contain secrets)
+.env
+.env.*
+!.env.example
+appsettings.Development.json
+
+# NuGet packages
+*.nupkg
+*.snupkg
+
+# VS Code C# Dev Tools - Auto-generated runners
+.vscodecsdt/Runners/
+
+# IDE settings
+.vscode

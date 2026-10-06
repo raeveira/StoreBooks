@@ -1,0 +1,166 @@
+.edit-book-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem;
+    background: rgb(15 23 42 / 58%);
+    backdrop-filter: blur(4px);
+}
+
+.edit-book-overlay__dialog {
+    width: min(100%, 42rem);
+    max-height: min(90vh, 52rem);
+    overflow-y: auto;
+    padding: clamp(1.25rem, 4vw, 2rem);
+    border: 1px solid #e2e8f0;
+    border-radius: 1rem;
+    background: #fff;
+    color: #172033;
+    box-shadow: 0 1.5rem 4rem rgb(15 23 42 / 24%);
+}
+
+.edit-book-overlay__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 1.1rem;
+    border-bottom: 1px solid #e8edf4;
+}
+
+.edit-book-overlay__header h2 {
+    margin: 0;
+    color: #172033;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.edit-book-overlay__close,
+.edit-book-form__submit {
+    min-height: 2.75rem;
+    padding: 0.65rem 1.1rem;
+    border: 1px solid #d8e0eb;
+    border-radius: 0.55rem;
+    background: #fff;
+    color: #475569;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.edit-book-overlay__content {
+    padding-top: 1.25rem;
+}
+
+.edit-book-form__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.edit-book-form__field {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.edit-book-form__field--wide {
+    grid-column: 1 / -1;
+}
+
+.edit-book-form__field ::deep label {
+    color: #344256;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.edit-book-form__field ::deep input,
+.edit-book-form__field ::deep textarea {
+    width: 100%;
+    min-height: 2.75rem;
+    padding: 0.65rem 0.8rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 0.55rem;
+    background: #fff;
+    color: #172033;
+    font: inherit;
+}
+
+.edit-book-form__field ::deep textarea {
+    min-height: 6rem;
+    resize: vertical;
+}
+
+.edit-book-form__field ::deep .validation-message {
+    color: #b91c1c;
+    font-size: 0.8rem;
+}
+
+.edit-book-overlay__dialog ::deep .validation-errors,
+.edit-book-form__error {
+    margin: 0 0 1rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid #fecaca;
+    border-radius: 0.6rem;
+    background: #fef2f2;
+    color: #991b1b;
+}
+
+.edit-book-overlay__dialog ::deep .validation-errors:empty {
+    display: none;
+}
+
+.edit-book-overlay__dialog ::deep .validation-errors ul {
+    margin: 0;
+    padding-left: 1.2rem;
+}
+
+.edit-book-form__actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e8edf4;
+}
+
+.edit-book-form__submit {
+    border-color: #1d4ed8;
+    background: #2563eb;
+    color: #fff;
+}
+
+.edit-book-overlay__close:focus-visible,
+.edit-book-form__submit:focus-visible {
+    outline: 3px solid rgb(59 130 246 / 40%);
+    outline-offset: 2px;
+}
+
+@media (max-width: 540px) {
+    .edit-book-overlay {
+        align-items: flex-end;
+        padding: 0;
+    }
+
+    .edit-book-overlay__dialog {
+        width: 100%;
+        max-height: 94vh;
+        padding: 1.25rem;
+        border-radius: 1rem 1rem 0 0;
+    }
+
+    .edit-book-form__grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .edit-book-form__field--wide {
+        grid-column: auto;
+    }
+
+    .edit-book-form__submit {
+        width: 100%;
+    }
+}

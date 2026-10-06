@@ -1,0 +1,102 @@
+@using StoreBooks.Models
+
+@if (_books.Count > 0)
+{
+    <table class="BookTable">
+        <thead class="BookTableHeader">
+            <th class="BookTableHeaderItem">Id</th>
+            <th class="BookTableHeaderItem">Title</th>
+            <th class="BookTableHeaderItem">Author</th>
+            <th class="BookTableHeaderItem">Price</th>
+            <th class="BookTableHeaderItem">Stock</th>
+            <th class="BookTableHeaderItem">Publish Date</th>
+            <th class="BookTableHeaderItem">Genre</th>
+            <th class="BookTableHeaderItem">Description</th>
+            <th class="BookTableHeaderItem">ISBN</th>
+            <th class="BookTableHeaderItem">Created At</th>
+            <th class="BookTableHeaderItem">Updated At</th>
+            <th class="BookTableHeaderItem"></th>
+            <th class="BookTableHeaderItem"></th>
+        </thead>
+        <tbody class="BookTableBody">
+            @foreach (Book book in _books)
+            {
+                <tr class="BookTableBodyRow">
+                    <td class="BookTableBodyRowItem">@book.Id</td>
+                    <td class="BookTableBodyRowItem">@book.Title</td>
+                    <td class="BookTableBodyRowItem">@book.Author</td>
+                    <td class="BookTableBodyRowItem">@ConvertCentsToEuros(book.PriceInCents)</td>
+                    <td class="BookTableBodyRowItem">@book.Stock</td>
+                    <td class="BookTableBodyRowItem">@book.PublishedDate</td>
+                    <td class="BookTableBodyRowItem">@book.Genre</td>
+                    <td class="BookTableBodyRowItem">@book.Description</td>
+                    <td class="BookTableBodyRowItem">@book.ISBN</td>
+                    <td class="BookTableBodyRowItem">@book.CreatedAt</td>
+                    <td class="BookTableBodyRowItem">@book.UpdatedAt</td>
+                    <td class="BookTableBodyRowItem">
+                        <button type="button" @onclick="() => OpenEditBook(book)">Edit</button>
+                    </td>
+                    <td class="BookTableBodyRowItem">
+                        <button type="button" @onclick="() => DeleteBook(book)">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p class="Error">No books found.</p>
+}
+
+<EditBookOverlay IsVisible="@(_bookToEdit is not null)" BookToEdit="_bookToEdit" OnClose="CloseEditBook"
+                 OnSaved="ReloadBooks" />
+
+@code
+{
+    private List<Book> _books = [];
+    private Book? _bookToEdit;
+
+    [Inject]
+    private BookService BookService { get; set; } = default!;
+
+    protected override void OnInitialized()
+    {
+        ReloadBooks();
+    }
+
+    private string ConvertCentsToEuros(int cents)
+    {
+        return $"€{cents / 100m:F2}";
+    }
+
+    private void OpenEditBook(Book book)
+    {
+        _bookToEdit = book;
+    }
+
+    private void CloseEditBook()
+    {
+        _bookToEdit = null;
+    }
+
+    private void DeleteBook(Book book)
+    {
+        bool successful = BookService.RemoveBook(book.Id);
+
+        if (!successful)
+        {
+            //TODO: Show error or something
+        }
+        else
+        {
+            ReloadBooks();
+        }
+    }
+
+    public void ReloadBooks()
+    {
+        _books = BookService.GetAllBooks().ToList();
+        StateHasChanged();
+    }
+}

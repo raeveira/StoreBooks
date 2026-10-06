@@ -1,0 +1,123 @@
+@using StoreBooks.Dto
+@using StoreBooks.Models
+
+@if (IsVisible)
+{
+    <div class="add-book-overlay" role="presentation" @onclick="Close">
+        <section class="add-book-overlay__dialog" role="dialog" aria-modal="true" aria-labelledby="add-book-title"
+                 @onclick:stopPropagation="true">
+            <div class="add-book-overlay__header">
+                <h2 id="add-book-title">Add a book</h2>
+                <button class="add-book-overlay__close" type="button" @onclick="Close">Close</button>
+            </div>
+
+            <div class="add-book-overlay__content">
+                <EditForm class="add-book-form" FormName="AddBook" Model="newBook" OnValidSubmit="SaveBook">
+                    <DataAnnotationsValidator />
+                    <ValidationSummary />
+
+                    @if (!string.IsNullOrWhiteSpace(errorMessage))
+                    {
+                        <p role="alert" class="add-book-form__error">@errorMessage</p>
+                    }
+
+                    <div class="add-book-form__grid">
+                        <div class="add-book-form__field">
+                            <label for="book-title">Title</label>
+                            <InputText id="book-title" @bind-Value="newBook.Title" />
+                        </div>
+                        <div class="add-book-form__field">
+                            <label for="book-author">Author</label>
+                            <InputText id="book-author" @bind-Value="newBook.Author" />
+                        </div>
+                        <div class="add-book-form__field">
+                            <label for="book-isbn">ISBN</label>
+                            <InputText id="book-isbn" @bind-Value="newBook.ISBN" />
+                        </div>
+                        <div class="add-book-form__field add-book-form__field--wide">
+                            <label for="book-description">Description</label>
+                            <InputTextArea id="book-description" @bind-Value="newBook.Description" />
+                        </div>
+                        <div class="add-book-form__field">
+                            <label for="book-price">Price (cents)</label>
+                            <InputNumber id="book-price" @bind-Value="newBook.PriceInCents" />
+                        </div>
+                        <div class="add-book-form__field">
+                            <label for="book-stock">Stock</label>
+                            <InputNumber id="book-stock" @bind-Value="newBook.Stock" />
+                        </div>
+                        <div class="add-book-form__field">
+                            <label for="book-published-date">Published date</label>
+                            <InputDate id="book-published-date" @bind-Value="newBook.PublishedDate" />
+                        </div>
+                        <div class="add-book-form__field">
+                            <label for="book-genre">Genre</label>
+                            <InputText id="book-genre" @bind-Value="newBook.Genre" />
+                        </div>
+                    </div>
+
+                    <div class="add-book-form__actions">
+                        <button class="add-book-form__submit" type="submit">Save book</button>
+                    </div>
+                </EditForm>
+            </div>
+
+        </section>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public bool IsVisible { get; set; }
+
+    [Parameter]
+    public EventCallback OnClose { get; set; }
+    [Parameter]
+    public EventCallback OnSaved { get; set; }
+
+    [Inject]
+    private BookService BookService { get; set; } = default!;
+
+    private BookDto newBook = CreateBook();
+    private string? errorMessage;
+
+    private async Task SaveBook()
+    {
+        try
+        {
+            bool successfull = BookService.AddBook(newBook);
+
+            if (!successfull)
+            {
+                errorMessage = "Unable to add the book. Please try again.";
+                return;
+            }
+
+            errorMessage = null;
+            newBook = CreateBook();
+            await OnSaved.InvokeAsync();
+            await Close();
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"An error occurred while adding the book: {ex.Message}";
+        }
+    }
+
+    private static BookDto CreateBook() => new()
+    {
+        Title = string.Empty,
+        Author = string.Empty,
+        PriceInCents = 0,
+        Stock = 0,
+        PublishedDate = DateTime.UtcNow,
+        Genre = string.Empty,
+        ISBN = string.Empty,
+    };
+
+    private Task Close()
+    {
+        errorMessage = string.Empty;
+        return OnClose.InvokeAsync();
+    }
+}

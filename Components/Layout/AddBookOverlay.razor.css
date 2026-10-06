@@ -1,0 +1,210 @@
+.add-book-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem;
+    background: rgb(15 23 42 / 58%);
+    backdrop-filter: blur(4px);
+}
+
+.add-book-overlay__dialog {
+    width: min(100%, 42rem);
+    max-height: min(90vh, 52rem);
+    overflow-y: auto;
+    padding: clamp(1.25rem, 4vw, 2rem);
+    border: 1px solid #e2e8f0;
+    border-radius: 1rem;
+    background: #fff;
+    color: #172033;
+    box-shadow: 0 1.5rem 4rem rgb(15 23 42 / 24%);
+}
+
+.add-book-overlay__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 1.1rem;
+    border-bottom: 1px solid #e8edf4;
+}
+
+.add-book-overlay__header h2 {
+    margin: 0;
+    color: #172033;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+}
+
+.add-book-overlay__close {
+    flex: 0 0 auto;
+    padding: 0.45rem 0.75rem;
+    border: 1px solid #d8e0eb;
+    border-radius: 0.55rem;
+    background: #fff;
+    color: #475569;
+    font: inherit;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease;
+}
+
+.add-book-overlay__close:hover {
+    border-color: #b8c6d8;
+    background: #f5f8fc;
+    color: #172033;
+}
+
+.add-book-overlay__content {
+    padding-top: 1.25rem;
+}
+
+.add-book-form__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.add-book-form__field {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.add-book-form__field--wide {
+    grid-column: 1 / -1;
+}
+
+.add-book-form__field ::deep label {
+    color: #344256;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.add-book-form__field ::deep input,
+.add-book-form__field ::deep textarea {
+    width: 100%;
+    min-height: 2.75rem;
+    padding: 0.65rem 0.8rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 0.55rem;
+    background: #fff;
+    color: #172033;
+    font: inherit;
+    font-size: 0.95rem;
+    transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.add-book-form__field ::deep textarea {
+    min-height: 6rem;
+    resize: vertical;
+}
+
+.add-book-form__field ::deep input:focus,
+.add-book-form__field ::deep textarea:focus {
+    border-color: #3b82f6;
+    outline: none;
+    box-shadow: 0 0 0 3px rgb(59 130 246 / 18%);
+}
+
+.add-book-form__field ::deep input.invalid,
+.add-book-form__field ::deep textarea.invalid {
+    border-color: #dc2626;
+}
+
+.add-book-overlay__dialog ::deep .validation-errors {
+    margin-bottom: 1rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid #fecaca;
+    border-radius: 0.6rem;
+    background: #fef2f2;
+    color: #991b1b;
+}
+
+.add-book-overlay__dialog ::deep .validation-errors:empty {
+    display: none;
+}
+
+.add-book-overlay__dialog ::deep .validation-errors ul {
+    margin: 0;
+    padding-left: 1.2rem;
+}
+
+.add-book-form__field ::deep .validation-message {
+    color: #b91c1c;
+    font-size: 0.8rem;
+}
+
+.add-book-form__error {
+    margin: 0 0 1rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid #fecaca;
+    border-radius: 0.6rem;
+    background: #fef2f2;
+    color: #991b1b;
+    font-size: 0.9rem;
+}
+
+.add-book-form__actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e8edf4;
+}
+
+.add-book-form__submit {
+    min-height: 2.75rem;
+    padding: 0.65rem 1.25rem;
+    border: 1px solid #1d4ed8;
+    border-radius: 0.55rem;
+    background: #2563eb;
+    color: #fff;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
+}
+
+.add-book-form__submit:hover {
+    background: #1d4ed8;
+    box-shadow: 0 4px 12px rgb(37 99 235 / 22%);
+    transform: translateY(-1px);
+}
+
+.add-book-form__submit:focus-visible,
+.add-book-overlay__close:focus-visible {
+    outline: 3px solid rgb(59 130 246 / 40%);
+    outline-offset: 2px;
+}
+
+@media (max-width: 540px) {
+    .add-book-overlay {
+        align-items: flex-end;
+        padding: 0;
+    }
+
+    .add-book-overlay__dialog {
+        width: 100%;
+        max-height: 94vh;
+        padding: 1.25rem;
+        border-radius: 1rem 1rem 0 0;
+    }
+
+    .add-book-form__grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .add-book-form__field--wide {
+        grid-column: auto;
+    }
+
+    .add-book-form__submit {
+        width: 100%;
+    }
+}

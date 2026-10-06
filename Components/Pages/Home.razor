@@ -1,0 +1,33 @@
+﻿@page "/"
+
+
+<PageTitle>Home</PageTitle>
+
+<div>
+    <div>
+        <h1>Books</h1>
+        <button type="button" @onclick="OpenAddBook">Add book</button>
+            
+        <ShowBooks @ref="_showBooks" />
+
+    </div>
+</div>
+
+<div class="overlay">
+    <AddBookOverlay IsVisible="showAddBook" OnClose="CloseAddBook" OnSaved="ReloadBooks" />
+</div>
+
+@code
+{
+    bool showAddBook;
+    private ShowBooks? _showBooks;
+
+    private void ReloadBooks() => _showBooks?.ReloadBooks();
+
+
+    void OpenAddBook() => showAddBook = true;
+
+    void CloseAddBook() => showAddBook = false;
+
+
+}

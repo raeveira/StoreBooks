@@ -1,0 +1,49 @@
+.Error {
+    background-color: hsl(345, 100%, 58%);
+    border-radius: 10px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: hsl(345, 79%, 46%);
+    padding: 2px 6px;
+    color: #fff;
+    width: max-content;
+    margin: 2px 0px;
+}
+
+.BookTable {
+    width: 100%;
+    margin-top: 1rem;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 0.9rem;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.BookTableHeaderItem {
+    background-color: #f1f3f5;
+    text-align: left;
+    font-weight: 600;
+    padding: 0.6rem 0.75rem;
+    border-bottom: 2px solid #dee2e6;
+    white-space: nowrap;
+}
+
+.BookTableBodyRowItem {
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid #e9ecef;
+    vertical-align: top;
+}
+
+.BookTableBodyRow:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.BookTableBodyRow:hover {
+    background-color: #e7f1ff;
+}
+
+.BookTableBodyRow:last-child .BookTableBodyRowItem {
+    border-bottom: none;
+}
